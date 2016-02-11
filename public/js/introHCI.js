@@ -12,6 +12,8 @@ function initializePage() {
 	$('.project a').click(addProjectDetails);
 
 	$('#colorBtn').click(randomizeColors);
+	
+	
 }
 
 /*
@@ -25,8 +27,37 @@ function addProjectDetails(e) {
 	var projectID = $(this).closest('.project').attr('id');
 	// get rid of 'project' from the front of the id 'project3'
 	var idNumber = projectID.substr('project'.length);
-
+	$.get("/project/" + idNumber, callBack);
+	
+	//$("#" + projectID + ".details").html("foo");
+	
 	console.log("User clicked on project " + idNumber);
+}
+
+function addProject(result){
+	console.log(result);
+	
+	var projectHTML = '<a href="#" class = "thumbnail">' + '<img src="' + result['image'] + 
+	'class = "img">' + '<p>' + result['title'] + '</p>' + '<p><small>' + result['date'] + '</small></p></a>';
+	
+	$("#project-container").html(projectHTML);
+	$("#project-description").html(result['summary']);
+}
+
+function callBack(result){
+	console.log(result);
+	
+	var selector = 'div#project' + result.id + '.project';
+	
+	//$(selector).children('.thumbnail').children('.details').html();
+	$(selector).children('.thumbnail').children('.details').html("<img src'" + result['image'] + "' class='detailsImage'>" + result.summary);
+	
+	/*var projectHTML = '<a href="#" class = "thumbnail">' + '<img src="' + result['image'] + 
+	'class = "img">' + '<p>' + result['title'] + '</p>' + '<p><small>' + result['date'] + '</small></p></a>';
+	
+	$("#project-container").html(projectHTML);
+	$("#project-description").html(result['summary']);*/
+	
 }
 
 /*
@@ -35,4 +66,21 @@ function addProjectDetails(e) {
  */
 function randomizeColors(e) {
 	console.log("User clicked on color button");
+	
+	$.get("/palette/", Color);
+}
+
+function Color(result){
+	console.log(result);
+	
+	var colors = result['colors']['hex'];
+	
+	console.log(colors);
+	
+	$('body').css('background-color', colors[0]);
+	$('.thumbnail').css('background-color', colors[1]);
+	$('h1, h2, h3, h4, h5, h5').css('color', colors[2]);
+	$('p').css('color', colors[3]);	
+	$('.project img').css('opacity', .75);
+	
 }
