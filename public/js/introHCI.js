@@ -3,6 +3,7 @@
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
 	initializePage();
+	
 })
 
 /*
@@ -12,6 +13,9 @@ function initializePage() {
 	$('.project a').click(addProjectDetails);
 
 	$('#colorBtn').click(randomizeColors);
+	//$('#colorBtn').click(stretch);
+	
+	
 	
 	
 }
@@ -27,7 +31,7 @@ function addProjectDetails(e) {
 	var projectID = $(this).closest('.project').attr('id');
 	// get rid of 'project' from the front of the id 'project3'
 	var idNumber = projectID.substr('project'.length);
-	$.get("/project/" + idNumber, callBack);
+	$.get("/project/" + idNumber, callBackProject);
 	
 	//$("#" + projectID + ".details").html("foo");
 	
@@ -44,7 +48,7 @@ function addProject(result){
 	$("#project-description").html(result['summary']);
 }
 
-function callBack(result){
+function callBackProject(result){
 	console.log(result);
 	
 	var selector = 'div#project' + result.id + '.project';
@@ -67,10 +71,10 @@ function callBack(result){
 function randomizeColors(e) {
 	console.log("User clicked on color button");
 	
-	$.get("/palette/", Color);
+	$.get("/palette/", callBackColor);
 }
 
-function Color(result){
+function callBackColor(result){
 	console.log(result);
 	
 	var colors = result['colors']['hex'];
@@ -83,4 +87,23 @@ function Color(result){
 	$('p').css('color', colors[3]);	
 	$('.project img').css('opacity', .75);
 	
+}
+
+
+/*
+ * REST API GET request
+ */
+function stretch(e){
+	console.log("S");
+	//alert("A");
+	$.get("/panoramio/", callBackPanoramio);	
+}
+function callBackPanoramio(result){
+	
+	console.log(result);
+	//alert(result);
+	//var count = result[0];
+	//alert("A");
+	//console.log(count);
+	//console.log("TEST");
 }
