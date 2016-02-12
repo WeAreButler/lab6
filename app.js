@@ -11,7 +11,7 @@ var handlebars = require('express3-handlebars')
 var index = require('./routes/index');
 var project = require('./routes/project');
 var palette = require('./routes/palette');
-var panoramio = require('./routes/panoramio');
+//var panoramio = require('./routes/panoramio');
 // Example route
 // var user = require('./routes/user');
 
@@ -40,7 +40,7 @@ if ('development' == app.get('env')) {
 app.get('/', index.view);
 app.get('/project/:id', project.projectInfo);
 app.get('/palette', palette.randomPalette);
-app.get('/panoramio', panoramio.Panoramio);
+//app.get('/panoramio', panoramio.Panoramio);
 // Example route
 // app.get('/users', user.list);
 
